@@ -1,6 +1,7 @@
 package com.sb.sbdemo.controller;
 
 import com.sb.sbdemo.access.LoginAccess;
+import com.sb.sbdemo.exception.BusiException;
 import com.sb.sbdemo.model.FfaDemand;
 import com.sb.sbdemo.page.PageInfo;
 import com.sb.sbdemo.service.FfaDemandService;
@@ -11,12 +12,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by yeli on 1/8/18.
  */
 @Controller
 public class IndexController {
+    @Value("${exception.probability.radix}")
+    private Integer radix;
 
     @Autowired
     private FfaDemandService ffaDemandService;
@@ -31,7 +35,16 @@ public class IndexController {
 
     @RequestMapping(value = "/login_access")
     @LoginAccess
-    public String loginAccess(){
+    public String loginAccess() {
         return "login_access";
+    }
+
+
+    @RequestMapping(value = "/busi_excep")
+    public String busiExcep() throws BusiException {
+        int probability = new Random().nextInt(radix);
+        if (probability > 50)
+            throw new BusiException("on purpose");
+        return "200";
     }
 }
