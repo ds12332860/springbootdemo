@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
  * Created by yeli on 1/8/18.
  */
 @Component
-@PropertySource("classpath:config/const.properties")
+@PropertySource(value = "classpath:config/const.properties", ignoreResourceNotFound = false)
 public class AccessHandlerInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(AccessHandlerInterceptor.class);
 
     @Value("${need.login}")
-    private boolean needLogin;
+    private Boolean needLogin;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

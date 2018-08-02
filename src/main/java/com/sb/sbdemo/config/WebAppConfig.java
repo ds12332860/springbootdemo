@@ -2,6 +2,7 @@ package com.sb.sbdemo.config;
 
 import com.sb.sbdemo.access.AccessHandlerInterceptor;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,8 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @SpringBootConfiguration
 public class WebAppConfig implements WebMvcConfigurer {
+
+    @Bean
+    AccessHandlerInterceptor accessHandlerInterceptor(){
+        return new AccessHandlerInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AccessHandlerInterceptor()).addPathPatterns("/");
+        registry.addInterceptor(accessHandlerInterceptor()).addPathPatterns("/*");
     }
 }
